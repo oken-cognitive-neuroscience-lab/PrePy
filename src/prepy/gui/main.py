@@ -19,7 +19,7 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import pyqtSlot
 
-from bcipy.helpers.load import load_json_parameters
+from prepy.util import load_json_parameters
 from prepy.config import PARAMETER_PATH
 from prepy.stimulate.stimulate import raspberry_pi_stimulation
 
