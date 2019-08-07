@@ -1,0 +1,25 @@
+{
+	"user_id": {
+		"value": "default_user",
+		"type": "str"
+	},
+	"number_of_trials": {
+		"value": "10",
+		"helpTip": "A trial consists of stimulation and inter trial periods",
+		"type": "int"
+	},
+	"inter_trial_period": {
+		"value": "9.0",
+		"helpTip": "Time in-between each trial",
+		"type": "float"
+	},
+	"number_of_blocks": {
+		"value": "2",
+		"type": "int"
+	},
+	"rest_period": {
+		"value": "2.0",
+		"helpTip": "Rest period between stimulation blocks",
+		"type": "float"
+	}
+}
