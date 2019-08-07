@@ -375,3 +375,5 @@ GitHub.sublime-settings
 .history
 
 .DS_Store
+
+data/*
