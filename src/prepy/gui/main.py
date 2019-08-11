@@ -66,8 +66,10 @@ class PrePy(QWidget):
     def on_stimulate(self):
         """Register on click events."""
         self.logger.info(
-            f'Starting experiment for user=[{self.user_textbox.text()}]'
-            f' with trials=[{self.trial_number_input.text()}]')
+            'Starting experiment for user=[{}]'
+            ' with trials=[{}]'.format(
+                self.user_textbox.text(),
+                self.trial_number_input.text()))
         self.stimulate()
 
     def stimulate(self):
@@ -89,7 +91,7 @@ class PrePy(QWidget):
         self.compile_parameters()
 
         user_information = self.user_textbox.text()
-        save_folder_name = f'data/{user_information}/'
+        save_folder_name = 'data/{}/'.format(user_information)
 
         save_directory = save_folder_name + user_information + '_' + strftime(
             '%a_%d_%b_%Y_%Hhr%Mmin%Ssec_%z', localtime())
@@ -99,7 +101,7 @@ class PrePy(QWidget):
             os.makedirs(save_directory)
 
             # save the parameters
-            with open(f'{save_directory}/parameters.json', 'w') as parameter_file:
+            with open('{}/parameters.json'.format(save_directory), 'w') as parameter_file:
                 json.dump(self.parameters, parameter_file)
         except FileExistsError:
             pass

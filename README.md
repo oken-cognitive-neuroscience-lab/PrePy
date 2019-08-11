@@ -12,11 +12,15 @@ python -m venv prepy_venv
 prepy_venv/Scripts/activate
 ```
 
-### Linux/ Mac
+### Mac
 ```bash
 python -m venv prepy_venv
-source prepy_venv/bin/activate # for unix/linux
+source prepy_venv/bin/activate # for unix
 ```
+
+### Linux
+
+You must install pyqt via apt-get `sudo apt-get install python3-pyqt5`
 
 Install in development mode: `pip install -e .`
 
