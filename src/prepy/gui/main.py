@@ -21,7 +21,7 @@ from PyQt5.QtCore import pyqtSlot
 
 from prepy.util import load_json_parameters
 from prepy.config import PARAMETER_PATH
-from prepy.stimulate.stimulate import raspberry_pi_stimulation
+from prepy.stimulate.stimulate import Stimulator
 
 
 class PrePy(QWidget):
@@ -67,26 +67,30 @@ class PrePy(QWidget):
         """Register on click events."""
         self.logger.info(
             'Starting experiment for user=[{}]'
-            ' with trials=[{}]'.format(
+            ' with blocks=[{}]'.format(
                 self.user_textbox.text(),
-                self.trial_number_input.text()))
+                self.block_number_input.text()))
         self.stimulate()
 
     def stimulate(self):
-        """Stimuluate."""
-        self.write_sessions()
+        """Stimulate."""
         qm = QMessageBox
         qm.question(self, 'PrePy Start Stimulation', 'Ready to start?', qm.Yes | qm.No)
+
         if qm.Yes:
-            raspberry_pi_stimulation(self.parameters, self.logger)
-            self.logger.info('Stimulate not registered')
+            self.write_sessions()
+
+            self.stimulator = Stimulator(self.parameters, self.logger)
+            self.stimulator.stimulate()
+
+            qm.information(self, 'PrePy Finished Stimulation', 'Experiment Finished!')
         else:
-            self.logger.info('No Stimulation')
+            self.logger.info('Not starting stimulation')
 
     def write_sessions(self):
         """Write Sessions.
 
-        TODO: write parameters
+        Compiles parameters from inputs and writes them to a session folder.
         """
         self.compile_parameters()
 
@@ -107,15 +111,21 @@ class PrePy(QWidget):
             pass
 
     def compile_parameters(self):
-        """Compile Parameters."""
+        """Compile Parameters.
+        
+        Retrieves and sets parameters from input fields.
+        """
         self.parameters['user_id'] = self.user_textbox.text()
-        self.parameters['number_of_trials'] = self.trial_number_input.text()
-        self.parameters['inter_trial_period'] = self.inter_trial_input.text()
-        self.parameters['number_of_blocks'] = self.block_number_input.text()
-        self.parameters['rest_period'] = self.rest_period_input.text()
+        self.parameters['number_of_trials'] = int(self.trial_number_input.text())
+        self.parameters['inter_trial_period'] = float(self.inter_trial_input.text())
+        self.parameters['number_of_blocks'] = int(self.block_number_input.text())
+        self.parameters['rest_period'] = float(self.rest_period_input.text())
 
     def get_initial_parameters(self, path):
-        """Get Initial Parameters."""
+        """Get Initial Parameters.
+        
+        Load and cast parameters from json parameters path provided.
+        """
         return load_json_parameters(path, value_cast=True)
 
     def create_buttons(self):
@@ -126,7 +136,7 @@ class PrePy(QWidget):
         self.grid.addWidget(self.start_button)
 
     def create_inputs(self):
-        """Create Text Boxes."""
+        """Create Input Boxes."""
         label = QLabel('User ID', self)
         self.user_textbox = QLineEdit(self)
         self.user_textbox.setText(self.parameters['user_id'])
@@ -165,5 +175,5 @@ class PrePy(QWidget):
 
 
 def app(args):
-    """Main app registry. Passes args from main and intilizes the app"""
+    """Main app registry. Passes args from main and initializes the app"""
     return QApplication(args)

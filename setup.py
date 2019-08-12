@@ -3,6 +3,7 @@ from setuptools import setup, find_packages
 
 VERSION = '0.1'
 
+# Not all installs work with linux. Some require manual installation. See README.
 if platform.system() == 'Linux':
     with open('requirements-linux.txt') as f:
         requirements = f.read().splitlines()

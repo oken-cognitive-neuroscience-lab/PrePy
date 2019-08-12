@@ -8,6 +8,21 @@
 		"helpTip": "A trial consists of stimulation and inter trial periods",
 		"type": "int"
 	},
+	"stim_type": {
+		"value": "1",
+		"helpTip": "Stimulation output type. (1) raspberry pi",
+		"type": "int"
+	},
+	"audio_prestim": {
+		"value": "true",
+		"helpTip": "Whether or not to play audio prior to stimulation",
+		"type": "bool"
+	},
+	"audio_path": {
+		"value": "static/audio/alert.mp3",
+		"helpTip": "path to audio pre-stimulation",
+		"type": "str"
+	},
 	"inter_trial_period": {
 		"value": "9.0",
 		"helpTip": "Time in-between each trial",
