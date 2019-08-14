@@ -33,7 +33,7 @@ class PrePy(QWidget):
         super().__init__()
 
         logging.basicConfig(
-            level=logging.INFO,
+            level=logging.DEBUG,
             format='%(name)s - %(levelname)s - %(message)s')
         self.logger = logging
         self.parameters = self.get_initial_parameters(PARAMETER_PATH)
@@ -112,18 +112,19 @@ class PrePy(QWidget):
 
     def compile_parameters(self):
         """Compile Parameters.
-        
+
         Retrieves and sets parameters from input fields.
         """
         self.parameters['user_id'] = self.user_textbox.text()
         self.parameters['number_of_trials'] = int(self.trial_number_input.text())
         self.parameters['inter_trial_period'] = float(self.inter_trial_input.text())
+        self.parameters['intra_trial_period'] = float(self.intra_trial_input.text())
         self.parameters['number_of_blocks'] = int(self.block_number_input.text())
         self.parameters['rest_period'] = float(self.rest_period_input.text())
 
     def get_initial_parameters(self, path):
         """Get Initial Parameters.
-        
+
         Load and cast parameters from json parameters path provided.
         """
         return load_json_parameters(path, value_cast=True)
@@ -153,27 +154,39 @@ class PrePy(QWidget):
 
         label = QLabel('Inter-Trial Period', self)
         self.inter_trial_input = QDoubleSpinBox(self)
+        self.inter_trial_input.setMaximum(100000)
         self.inter_trial_input.setValue(self.parameters['inter_trial_period'])
         self.inter_trial_input.resize(100, 25)
         self.grid.addWidget(self.inter_trial_input, 3, 0)
         self.grid.addWidget(label, 3, 1)
 
+        label = QLabel('Intra-Trial Period', self)
+        self.intra_trial_input = QDoubleSpinBox(self)
+        self.intra_trial_input.setMaximum(100000)
+        self.intra_trial_input.setValue(self.parameters['intra_trial_period'])
+        self.intra_trial_input.resize(100, 25)
+        self.grid.addWidget(self.intra_trial_input, 4, 0)
+        self.grid.addWidget(label, 4, 1)
+
         label = QLabel('Number of Blocks', self)
         self.block_number_input = QSpinBox(self)
         self.block_number_input.setValue(self.parameters['number_of_blocks'])
         self.block_number_input.resize(100, 25)
-        self.grid.addWidget(self.block_number_input, 4, 0)
-        self.grid.addWidget(label, 4, 1)
-
+        self.grid.addWidget(self.block_number_input, 5, 0)
+        self.grid.addWidget(label, 5, 1)
 
         label = QLabel('Rest Period', self)
         self.rest_period_input = QDoubleSpinBox(self)
+        self.rest_period_input.setMaximum(100000)
         self.rest_period_input.setValue(self.parameters['rest_period'])
         self.rest_period_input.resize(100, 25)
-        self.grid.addWidget(self.rest_period_input, 5, 0)
-        self.grid.addWidget(label, 5, 1)
+        self.grid.addWidget(self.rest_period_input, 6, 0)
+        self.grid.addWidget(label, 6, 1)
 
 
 def app(args):
-    """Main app registry. Passes args from main and initializes the app"""
+    """Main app registry.
+
+    Passes args from main and initializes the app
+    """
     return QApplication(args)
