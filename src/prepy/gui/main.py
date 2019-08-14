@@ -75,9 +75,9 @@ class PrePy(QWidget):
     def stimulate(self):
         """Stimulate."""
         qm = QMessageBox
-        qm.question(self, 'PrePy Start Stimulation', 'Ready to start?', qm.Yes | qm.No)
+        response = qm.question(self, 'PrePy Start Stimulation', 'Ready to start?', qm.Yes | qm.No)
 
-        if qm.Yes:
+        if response == qm.Yes:
             self.write_sessions()
 
             self.stimulator = Stimulator(self.parameters, self.logger)
