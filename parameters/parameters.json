@@ -5,12 +5,32 @@
 	},
 	"number_of_trials": {
 		"value": "10",
-		"helpTip": "A trial consists of stimulation and inter trial periods",
+		"helpTip": "A trial consists of stimulation (Trigger and Audio PreStim) and inter/intra trial periods",
 		"type": "int"
+	},
+	"stim_type": {
+		"value": "1",
+		"helpTip": "Stimulation output type. (1) raspberry pi",
+		"type": "int"
+	},
+	"audio_prestim": {
+		"value": "true",
+		"helpTip": "Whether or not to play audio prior to stimulation",
+		"type": "bool"
+	},
+	"audio_path": {
+		"value": "static/audio/alert.mp3",
+		"helpTip": "Path to audio pre-stimulation",
+		"type": "str"
 	},
 	"inter_trial_period": {
 		"value": "9.0",
-		"helpTip": "Time in-between each trial",
+		"helpTip": "Time in seconds between each trial",
+		"type": "float"
+	},
+	"intra_trial_period": {
+		"value": "1.0",
+		"helpTip": "Time in seconds between each trial and audio pre-stimulation",
 		"type": "float"
 	},
 	"number_of_blocks": {
@@ -18,8 +38,8 @@
 		"type": "int"
 	},
 	"rest_period": {
-		"value": "2.0",
-		"helpTip": "Rest period between stimulation blocks",
+		"value": "300.0",
+		"helpTip": "Rest period in seconds between stimulation blocks",
 		"type": "float"
 	}
 }

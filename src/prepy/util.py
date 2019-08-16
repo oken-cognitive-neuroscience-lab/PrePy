@@ -35,7 +35,7 @@ def cast_value(value):
             raise ValueError('Unrecognized value type')
 
     except Exception:
-        raise ValueError(f'Could not cast {actual_value} to {actual_type}')
+        raise ValueError('Could not cast {} to {}'.format(actual_value, actual_type))
 
     return new_value
 
