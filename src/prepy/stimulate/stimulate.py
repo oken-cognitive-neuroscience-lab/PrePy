@@ -89,6 +89,10 @@ class Stimulator:
 
 
 class MockGPIO:
+    """Mock GPIO.
+
+    For testing when GPIO module cannot be installed.
+    """
 
     def __init__(self, logger):
         self.logger = logger
