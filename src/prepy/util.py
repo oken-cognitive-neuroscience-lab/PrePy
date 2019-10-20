@@ -72,11 +72,11 @@ def load_json_parameters(path: str, value_cast: bool=False) -> dict:
                     parameters = _cast_parameters(parameters)
             except ValueError:
                 raise ValueError(
-                    "Parameters file is formatted incorrectly!")
+                    'Parameters file is formatted incorrectly!')
 
         f.close()
 
     except IOError:
-        raise IOError("Incorrect path to parameters given! Please try again.")
+        raise IOError('Incorrect path to parameters given! Please try again.')
 
     return parameters

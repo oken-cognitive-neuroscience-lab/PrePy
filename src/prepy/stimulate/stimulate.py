@@ -21,6 +21,8 @@ class Stimulator:
         self.inter_trial_period = parameters['inter_trial_period']
 
         self.stim_type = parameters['stim_type']
+        self.dual_stim = parameters['dual_stim']
+        self.inter_stim_period = parameters['inter_stim_period']
         self.audio_stim = parameters['audio_prestim']
         self.intra_trial_period = parameters['intra_trial_period']
 
@@ -50,15 +52,16 @@ class Stimulator:
 
         self.logger.info('Starting raspberry pi stimulation')
 
+        # keep track of blocks/trials
         num_blocks = self.blocks - 1
-        index = 0
+        num_trials = self.trials - 1
+
         # Loop over blocks [trials + rest period]
         for block in range(self.blocks):
 
-            # Loop over trials [audio pre stim + trigger]
-            for _ in range(self.trials):
+            # Loop over trials [audio pre stim (optional) + trigger]
+            for trial in range(self.trials):
                 # make sure pin is off
-                self.logger.debug('Setting PIN {} to False'.format(RASPBERRY_GPIO_PIN))
                 GPIO.output(RASPBERRY_GPIO_PIN, False)
 
                 # play pre-stim
@@ -70,21 +73,27 @@ class Stimulator:
                     # sleep for intra trial period
                     time.sleep(self.intra_trial_period)
 
-                self.logger.debug('Setting PIN {} to TRUE'.format(RASPBERRY_GPIO_PIN))
                 # set pins to output trigger
                 GPIO.output(RASPBERRY_GPIO_PIN, True)
 
-                self.logger.debug('Sleeping for inter trial period {}'.format(self.inter_trial_period))
-                # sleep for inter trial period
-                time.sleep(self.inter_trial_period)
+                if self.dual_stim:
+                    GPIO.output(RASPBERRY_GPIO_PIN, False)
 
-            # if this is the last block, skip the rest period
-            if block == num_blocks:
-                pass
-            else:
+                    self.logger.debug('Sleeping for inter stimuli period {}'.format(self.inter_stim_period))
+                    time.sleep(self.inter_stim_period)
+                    
+                    GPIO.output(RASPBERRY_GPIO_PIN, True)
+
+                self.logger.debug('Sleeping for inter trial period {}'.format(self.inter_trial_period))
+                
+                # If this is not the last trial, sleep for the inter trial period
+                if trial != num_trials:
+                    time.sleep(self.inter_trial_period)
+
+            # If this is not the last block, sleep for the rest period
+            if block != num_blocks:
                 self.logger.debug('Trail Complete: sleeping for rest period {}'.format(self.rest_period))
                 time.sleep(self.rest_period)
-                index += 1
         self.logger.info('Finished raspberry pi stimulation')
 
 
@@ -98,4 +107,7 @@ class MockGPIO:
         self.logger = logger
 
     def output(self, pin, value):
-        pass
+        if value:
+            self.logger.debug('Setting [{}] pin to true'.format(pin))
+        else:
+            self.logger.debug('Setting [{}] pin to false'.format(pin))

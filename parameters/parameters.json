@@ -1,7 +1,13 @@
 {
 	"user_id": {
-		"value": "default_user",
+		"value": "default",
+		"helpTip": "Unique User ID",
 		"type": "str"
+	},
+	"stim_intensity": {
+		"value": "0",
+		"helpTip": "Intensity of the stimuli in mA (this is set on external device. Recorded here for reporting)",
+		"type": "float"
 	},
 	"number_of_trials": {
 		"value": "10",
@@ -23,6 +29,16 @@
 		"helpTip": "Path to audio pre-stimulation",
 		"type": "str"
 	},
+	"dual_stim": {
+		"value": "true",
+		"helpTip": "Whether or not to stimulate twice",
+		"type": "bool"
+	},
+	"inter_stim_period": {
+		"value": "0.05",
+		"helpTip": "If dual stimuli, this parameters determines how long in-between stimulations in seconds",
+		"type": "float"
+	},
 	"inter_trial_period": {
 		"value": "9.0",
 		"helpTip": "Time in seconds between each trial",
@@ -35,6 +51,7 @@
 	},
 	"number_of_blocks": {
 		"value": "2",
+		"helpTip": "Number of stimulation blocks. A block consists of a trials and a rest period.",
 		"type": "int"
 	},
 	"rest_period": {
