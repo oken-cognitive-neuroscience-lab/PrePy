@@ -29,14 +29,14 @@
 		"helpTip": "Path to audio pre-stimulation",
 		"type": "str"
 	},
-	"dual_stim": {
+	"paired_pulse": {
 		"value": "true",
 		"helpTip": "Whether or not to stimulate twice",
 		"type": "bool"
 	},
 	"inter_stim_period": {
 		"value": "0.05",
-		"helpTip": "If dual stimuli, this parameters determines how long in-between stimulations in seconds",
+		"helpTip": "If paired pulse enabled, this parameters determines how long in-between stimulations in seconds",
 		"type": "float"
 	},
 	"inter_trial_period": {

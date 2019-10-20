@@ -21,7 +21,7 @@ class Stimulator:
         self.inter_trial_period = parameters['inter_trial_period']
 
         self.stim_type = parameters['stim_type']
-        self.dual_stim = parameters['dual_stim']
+        self.paired_pulse = parameters['paired_pulse']
         self.inter_stim_period = parameters['inter_stim_period']
         self.audio_stim = parameters['audio_prestim']
         self.intra_trial_period = parameters['intra_trial_period']
@@ -75,8 +75,9 @@ class Stimulator:
 
                 # set pins to output trigger
                 GPIO.output(RASPBERRY_GPIO_PIN, True)
-
-                if self.dual_stim:
+                
+                # If paired pulse enabled, wait a time and stimulate again
+                if self.paired_pulse:
                     GPIO.output(RASPBERRY_GPIO_PIN, False)
 
                     self.logger.debug('Sleeping for inter stimuli period {}'.format(self.inter_stim_period))
