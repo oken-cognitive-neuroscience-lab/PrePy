@@ -40,8 +40,8 @@ class PrePy(QWidget):
 
         self.left = 50
         self.top = 50
-        self.width = 300
-        self.height = 300
+        self.width = 400
+        self.height = 400
 
         self.grid = QGridLayout()
         self.grid.setSpacing(2)
@@ -121,6 +121,8 @@ class PrePy(QWidget):
         self.parameters['intra_trial_period'] = float(self.intra_trial_input.text())
         self.parameters['number_of_blocks'] = int(self.block_number_input.text())
         self.parameters['rest_period'] = float(self.rest_period_input.text())
+        self.parameters['inter_stim_period'] = float(self.inter_stim_period.text())
+        self.parameters['stim_intensity'] = float(self.stim_intensity.text())
 
     def get_initial_parameters(self, path):
         """Get Initial Parameters.
@@ -145,43 +147,59 @@ class PrePy(QWidget):
         self.grid.addWidget(self.user_textbox, 1, 0)
         self.grid.addWidget(label, 1, 1)
 
-        label = QLabel('Number of Trials', self)
+        label = QLabel('Blocks', self)
+        self.block_number_input = QSpinBox(self)
+        self.block_number_input.setValue(self.parameters['number_of_blocks'])
+        self.block_number_input.resize(100, 25)
+        self.grid.addWidget(self.block_number_input, 2, 0)
+        self.grid.addWidget(label, 2, 1)
+
+        label = QLabel('Trials', self)
         self.trial_number_input = QSpinBox(self)
         self.trial_number_input.setValue(self.parameters['number_of_trials'])
         self.trial_number_input.resize(100, 25)
-        self.grid.addWidget(self.trial_number_input, 2, 0)
-        self.grid.addWidget(label, 2, 1)
+        self.grid.addWidget(self.trial_number_input, 3, 0)
+        self.grid.addWidget(label, 3, 1)
 
-        label = QLabel('Inter-Trial Period', self)
+        label = QLabel('Inter-Trial Period (s)', self)
         self.inter_trial_input = QDoubleSpinBox(self)
         self.inter_trial_input.setMaximum(100000)
         self.inter_trial_input.setValue(self.parameters['inter_trial_period'])
         self.inter_trial_input.resize(100, 25)
-        self.grid.addWidget(self.inter_trial_input, 3, 0)
-        self.grid.addWidget(label, 3, 1)
+        self.grid.addWidget(self.inter_trial_input, 4, 0)
+        self.grid.addWidget(label, 4, 1)
 
-        label = QLabel('Intra-Trial Period', self)
+        label = QLabel('Intra-Trial Period (s)', self)
         self.intra_trial_input = QDoubleSpinBox(self)
         self.intra_trial_input.setMaximum(100000)
         self.intra_trial_input.setValue(self.parameters['intra_trial_period'])
         self.intra_trial_input.resize(100, 25)
-        self.grid.addWidget(self.intra_trial_input, 4, 0)
-        self.grid.addWidget(label, 4, 1)
-
-        label = QLabel('Number of Blocks', self)
-        self.block_number_input = QSpinBox(self)
-        self.block_number_input.setValue(self.parameters['number_of_blocks'])
-        self.block_number_input.resize(100, 25)
-        self.grid.addWidget(self.block_number_input, 5, 0)
+        self.grid.addWidget(self.intra_trial_input, 5, 0)
         self.grid.addWidget(label, 5, 1)
 
-        label = QLabel('Rest Period', self)
+        label = QLabel('Rest Period (s)', self)
         self.rest_period_input = QDoubleSpinBox(self)
         self.rest_period_input.setMaximum(100000)
         self.rest_period_input.setValue(self.parameters['rest_period'])
         self.rest_period_input.resize(100, 25)
         self.grid.addWidget(self.rest_period_input, 6, 0)
         self.grid.addWidget(label, 6, 1)
+
+        label = QLabel('Inter-Stimuli Period (s)', self)
+        self.inter_stim_period = QDoubleSpinBox(self)
+        self.inter_stim_period.setMaximum(100000)
+        self.inter_stim_period.setValue(self.parameters['inter_stim_period'])
+        self.inter_stim_period.resize(100, 25)
+        self.grid.addWidget(self.inter_stim_period, 7, 0)
+        self.grid.addWidget(label, 7, 1)
+
+        label = QLabel('Stimuli Intensity (mA) *set externally', self)
+        self.stim_intensity = QDoubleSpinBox(self)
+        self.stim_intensity.setMaximum(100000)
+        self.stim_intensity.setValue(self.parameters['stim_intensity'])
+        self.stim_intensity.resize(100, 25)
+        self.grid.addWidget(self.stim_intensity, 8, 0)
+        self.grid.addWidget(label, 8, 1)
 
 
 def app(args):
